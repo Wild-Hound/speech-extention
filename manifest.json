@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "version": "0.1.0",
+  "name": "Easy Read",
+  "description": "Start Extention",
+  "icons": {
+    "128": "./resourse/icon.png",
+    "48": "./resourse/icon.png",
+    "16": "./resourse/icon.png"
+  },
+  "browser_action": {
+    "defaule_icon": "./resourse/icon.png",
+    "default_popup": "./popup/popup.html"
+  },
+  "background": {
+    "scripts": ["./Background.js"],
+    "persistent": false
+  },
+  "permissions": ["tabs", "activeTab", "storage"]
+}
