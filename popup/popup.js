@@ -1,13 +1,13 @@
-var playBtn = document.getElementById("play");
-var pauseBtn = document.getElementById("pause");
-var stopBtn = document.getElementById("stop");
-chrome.runtime.sendMessage({ action: "extract text" });
-playBtn.addEventListener("click", function (e) {
+const playBtn = document.getElementById("play");
+const pauseBtn = document.getElementById("pause");
+const stopBtn = document.getElementById("stop");
+chrome.runtime.sendMessage({ action: "inject widget" });
+playBtn.addEventListener("click", (e) => {
     chrome.runtime.sendMessage({ action: "play" });
 });
-pauseBtn.addEventListener("click", function (e) {
+pauseBtn.addEventListener("click", (e) => {
     chrome.runtime.sendMessage({ action: "pause" });
 });
-stopBtn.addEventListener("click", function (e) {
+stopBtn.addEventListener("click", (e) => {
     chrome.runtime.sendMessage({ action: "stop" });
 });

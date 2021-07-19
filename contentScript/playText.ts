@@ -1,12 +1,12 @@
-let ttsText = "";
+if (!speechSynthesis.paused) {
+  console.log("executed");
+  const content: HTMLElement = document.getElementById("content");
+  const text = (content as HTMLElement).innerText;
 
-chrome.storage.sync.get("text", (text) => {
-  if (speechSynthesis.paused) {
-    speechSynthesis.resume();
-  } else {
-    const speechUtterence = new SpeechSynthesisUtterance();
-    speechUtterence.lang = "en-US";
-    speechUtterence.text = text.text;
-    speechSynthesis.speak(speechUtterence);
-  }
-});
+  const speechUtterence = new SpeechSynthesisUtterance();
+  speechUtterence.lang = "en-US";
+  speechUtterence.text = text;
+  speechSynthesis.speak(speechUtterence);
+} else {
+  speechSynthesis.resume();
+}

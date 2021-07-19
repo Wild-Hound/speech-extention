@@ -1,12 +1,12 @@
-var ttsText = "";
-chrome.storage.sync.get("text", function (text) {
-    if (speechSynthesis.paused) {
-        speechSynthesis.resume();
-    }
-    else {
-        var speechUtterence = new SpeechSynthesisUtterance();
-        speechUtterence.lang = "en-US";
-        speechUtterence.text = text.text;
-        speechSynthesis.speak(speechUtterence);
-    }
-});
+if (!speechSynthesis.paused) {
+    console.log("executed");
+    const content = document.getElementById("content");
+    const text = content.innerText;
+    const speechUtterence = new SpeechSynthesisUtterance();
+    speechUtterence.lang = "en-US";
+    speechUtterence.text = text;
+    speechSynthesis.speak(speechUtterence);
+}
+else {
+    speechSynthesis.resume();
+}

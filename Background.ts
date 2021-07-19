@@ -1,9 +1,20 @@
+let isInjected = false;
+
 chrome.runtime.onMessage.addListener((message, sender, sendRes) => {
   switch (message.action) {
-    case "extract text":
-      chrome.tabs.executeScript(null, {
-        file: "./contentScript/extractText.js",
-      });
+    case "inject widget":
+      if (!isInjected) {
+        chrome.tabs.executeScript(null, {
+          file: "./contentScript/injectWidget.js",
+        });
+        chrome.tabs.insertCSS(null, {
+          file: "./contentScript/speechWidget.css",
+        });
+        isInjected = true;
+      }
+      break;
+    case "widget removed":
+      isInjected = false;
       break;
     case "play":
       chrome.tabs.executeScript(null, {
