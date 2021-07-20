@@ -2,8 +2,120 @@
   position: fixed;
   bottom: 1.5em;
   right: 1.5em;
-  height: 100px;
-  width: 100px;
-  background-color: black;
+  background-color: #2c3e50;
+  padding: 1em;
+  width: 250px;
+}
+
+.windowControlGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1em;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.windowControlGroup .winConBtn {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.windowControlGroup .winConBtn:hover {
+  color: #95a5a6;
+}
+
+.speechOptGroup {
+  color: white;
+  font-size: 1.15em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-bottom: 1em;
+}
+
+.speechOptGroup .groupWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0.5em;
+}
+
+.speechOptGroup .groupWrapper .input {
+  width: 100%;
+}
+
+.speechOptGroup .selectWrapper {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.conBtnGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1em;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.conBtnGroup .controlBtn {
+  border: 1px solid white;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  -webkit-transition: all 0.35s;
+  transition: all 0.35s;
+  height: 35px;
+  width: 35px;
+}
+
+.conBtnGroup #pause {
+  border: 1px solid #2980b9;
+  color: #2980b9;
+}
+
+.conBtnGroup #pause:hover {
+  background-color: #2980b9;
+  color: #2c3e50;
+}
+
+.conBtnGroup #play {
+  border: 1px solid #27ae60;
+  color: #27ae60;
+  font-size: 1.15em;
+  height: 45px;
+  width: 45px;
+}
+
+.conBtnGroup #play:hover {
+  background-color: #27ae60;
+  color: #2c3e50;
+}
+
+.conBtnGroup #stop {
+  border: 1px solid #c0392b;
+  color: #c0392b;
+}
+
+.conBtnGroup #stop:hover {
+  background-color: #c0392b;
+  color: #2c3e50;
 }
 /*# sourceMappingURL=speechWidget.css.map */

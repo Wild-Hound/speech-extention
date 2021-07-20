@@ -2,7 +2,88 @@
   position: fixed;
   bottom: 1.5em;
   right: 1.5em;
-  height: 100px;
-  width: 100px;
-  background-color: black;
+  background-color: #2c3e50;
+  padding: 1em;
+  width: 250px;
+}
+
+.windowControlGroup {
+  display: flex;
+  margin-bottom: 1em;
+  justify-content: flex-end;
+  .winConBtn {
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    &:hover {
+      color: #95a5a6;
+    }
+  }
+}
+
+.speechOptGroup {
+  color: white;
+  font-size: 1.15em;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+  .groupWrapper {
+    display: flex;
+    gap: 0.5em;
+    .input {
+      width: 100%;
+    }
+  }
+  .selectWrapper {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+}
+
+.conBtnGroup {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+
+  .controlBtn {
+    border: 1px solid white;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.35s;
+    height: 35px;
+    width: 35px;
+  }
+
+  #pause {
+    border: 1px solid #2980b9;
+    color: #2980b9;
+    &:hover {
+      background-color: #2980b9;
+      color: #2c3e50;
+    }
+  }
+  #play {
+    border: 1px solid #27ae60;
+    color: #27ae60;
+    font-size: 1.15em;
+    height: 45px;
+    width: 45px;
+    &:hover {
+      background-color: #27ae60;
+      color: #2c3e50;
+    }
+  }
+  #stop {
+    border: 1px solid #c0392b;
+    color: #c0392b;
+    &:hover {
+      background-color: #c0392b;
+      color: #2c3e50;
+    }
+  }
 }
