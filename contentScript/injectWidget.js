@@ -98,8 +98,8 @@ function playSpeech(rateVal, pitchVal) {
             const speechUtter = new SpeechSynthesisUtterance();
             speechUtter.rate = rateVal;
             speechUtter.pitch = pitchVal;
-            speechUtter.lang = "en-US";
             speechUtter.text = text;
+            setVoice(speechUtter);
             speechSynthesis.speak(speechUtter);
             console.log("playing speech");
         }
@@ -121,10 +121,24 @@ function extractText() {
 function intregateVoices() {
     speechSynthesis.addEventListener("voiceschanged", (e) => {
         const voices = speechSynthesis.getVoices().map((voice) => {
-            return `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`;
+            return `<option value="${voice.name},${voice.lang}">${voice.name} (${voice.lang})</option>`;
         });
         const voiceSelectElement = document.getElementById("voices");
         voiceSelectElement.innerHTML = voices.join("");
+    });
+}
+function setVoice(speechUtter) {
+    speechSynthesis.getVoices().map((voice) => {
+        const element = document.getElementById("voices");
+        const dataArray = element.value.split(",");
+        const voiceName = dataArray[0];
+        const voiceLang = dataArray[1];
+        speechUtter.lang = voiceLang;
+        speechSynthesis.getVoices().map((voice) => {
+            if (voice.name == voiceName) {
+                speechUtter.voice = voice;
+            }
+        });
     });
 }
 injectWidget();
