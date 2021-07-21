@@ -1,5 +1,12 @@
-let rateVal = 1;
-let pitchVal = 1;
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 function injectWidget() {
     const fontawesome = document.createElement("link");
     fontawesome.rel = "stylesheet";
@@ -20,12 +27,12 @@ function injectWidget() {
 
     <div class='groupWrapper'>
     <label for="rate">Rate: </label>
-    <input type='range' id='rate' class="input"min='0.5' max='2' value='${rateVal}' step='0.1'/>
+    <input type='range' id='rate' class="input"min='0.5' max='2' value='1' step='0.1'/>
     </div>
 
     <div class='groupWrapper'>
     <label for="pitch">Pitch: </label>
-    <input type='range' id='pitch' class="input" min='0.1' max='2' value='${pitchVal}'step='0.1'/>
+    <input type='range' id='pitch' class="input" min='0.1' max='2' value='1'step='0.1'/>
     </div>
   </div>
   `;
@@ -44,11 +51,13 @@ function injectWidget() {
     wrapper.innerHTML = widget;
     document.head.append(fontawesome);
     document.body.appendChild(wrapper);
-    console.log("widget injected");
+    intregateVoices();
 }
 function widgetAction() {
     const widget = document.getElementById("speechWidget");
     const btn = document.getElementById("windowCloseBtn");
+    let rateVal = 1;
+    let pitchVal = 1;
     btn.addEventListener("click", (e) => {
         widget.remove();
         chrome.runtime.sendMessage({ action: "widget removed" });
@@ -59,7 +68,7 @@ function widgetAction() {
     });
     const playBtn = document.getElementById("play");
     playBtn.addEventListener("click", (e) => {
-        playSpeech();
+        playSpeech(rateVal, pitchVal);
     });
     const stopBtn = document.getElementById("stop");
     stopBtn.addEventListener("click", (e) => {
@@ -82,20 +91,22 @@ function pauseSpeech() {
         console.log("speech paused");
     }
 }
-function playSpeech() {
-    if (!speechSynthesis.paused) {
-        const text = extractText();
-        const speechUtter = new SpeechSynthesisUtterance();
-        speechUtter.rate = rateVal;
-        speechUtter.pitch = pitchVal;
-        speechUtter.lang = "en-US";
-        speechUtter.text = text;
-        speechSynthesis.speak(speechUtter);
-        console.log("playing speech");
-    }
-    else {
-        speechSynthesis.resume();
-    }
+function playSpeech(rateVal, pitchVal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!speechSynthesis.paused) {
+            const text = extractText();
+            const speechUtter = new SpeechSynthesisUtterance();
+            speechUtter.rate = rateVal;
+            speechUtter.pitch = pitchVal;
+            speechUtter.lang = "en-US";
+            speechUtter.text = text;
+            speechSynthesis.speak(speechUtter);
+            console.log("playing speech");
+        }
+        else {
+            speechSynthesis.resume();
+        }
+    });
 }
 function stopSpeech() {
     if (speechSynthesis.speaking || speechSynthesis.paused) {
@@ -106,6 +117,15 @@ function stopSpeech() {
 function extractText() {
     const textContent = document.getElementById("content");
     return textContent.innerText;
+}
+function intregateVoices() {
+    speechSynthesis.addEventListener("voiceschanged", (e) => {
+        const voices = speechSynthesis.getVoices().map((voice) => {
+            return `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`;
+        });
+        const voiceSelectElement = document.getElementById("voices");
+        voiceSelectElement.innerHTML = voices.join("");
+    });
 }
 injectWidget();
 widgetAction();

@@ -1,6 +1,3 @@
-let rateVal = 1;
-let pitchVal = 1;
-
 function injectWidget() {
   const fontawesome = document.createElement("link");
   fontawesome.rel = "stylesheet";
@@ -23,12 +20,12 @@ function injectWidget() {
 
     <div class='groupWrapper'>
     <label for="rate">Rate: </label>
-    <input type='range' id='rate' class="input"min='0.5' max='2' value='${rateVal}' step='0.1'/>
+    <input type='range' id='rate' class="input"min='0.5' max='2' value='1' step='0.1'/>
     </div>
 
     <div class='groupWrapper'>
     <label for="pitch">Pitch: </label>
-    <input type='range' id='pitch' class="input" min='0.1' max='2' value='${pitchVal}'step='0.1'/>
+    <input type='range' id='pitch' class="input" min='0.1' max='2' value='1'step='0.1'/>
     </div>
   </div>
   `;
@@ -50,11 +47,13 @@ function injectWidget() {
   document.head.append(fontawesome);
   document.body.appendChild(wrapper);
 
-  console.log("widget injected");
+  intregateVoices();
 }
 function widgetAction() {
   const widget = document.getElementById("speechWidget");
   const btn = document.getElementById("windowCloseBtn");
+  let rateVal = 1;
+  let pitchVal = 1;
 
   btn.addEventListener("click", (e) => {
     widget.remove();
@@ -68,7 +67,7 @@ function widgetAction() {
 
   const playBtn = document.getElementById("play");
   playBtn.addEventListener("click", (e) => {
-    playSpeech();
+    playSpeech(rateVal, pitchVal);
   });
 
   const stopBtn = document.getElementById("stop");
@@ -96,7 +95,7 @@ function pauseSpeech() {
   }
 }
 
-function playSpeech() {
+async function playSpeech(rateVal: number, pitchVal: number) {
   if (!speechSynthesis.paused) {
     const text = extractText();
     const speechUtter = new SpeechSynthesisUtterance();
@@ -121,6 +120,16 @@ function stopSpeech() {
 function extractText(): string {
   const textContent = document.getElementById("content");
   return textContent.innerText;
+}
+
+function intregateVoices() {
+  speechSynthesis.addEventListener("voiceschanged", (e) => {
+    const voices = speechSynthesis.getVoices().map((voice) => {
+      return `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`;
+    });
+    const voiceSelectElement = document.getElementById("voices");
+    voiceSelectElement.innerHTML = voices.join("");
+  });
 }
 
 injectWidget();
